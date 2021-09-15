@@ -7,12 +7,16 @@ import java.util.Scanner;
  */
 public class Base {
     public static void main(String[] args) {
+        // initialize scanner for reading user's input
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter first number:");
+        // read first number
         float a = scanner.nextFloat();
         System.out.println("Enter second number");
+        // read second number
         float b = scanner.nextFloat();
-        System.out.printf("Sum = %.4f", calculate(a, b));
+        // calculate and output the result
+        System.out.printf(/*round to 4 decimal places*/"Sum = %.4f", calculate(a, b));
     }
 
     /**
@@ -22,6 +26,7 @@ public class Base {
      * @return sum of a and b
      */
     private static float calculate(float a, float b) {
+        // return sum of given numbers
         return a + b;
     }
 }
