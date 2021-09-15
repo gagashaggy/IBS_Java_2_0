@@ -12,7 +12,7 @@ public class Base {
         System.out.println("Enter first number:");
         // read first number
         float a = scanner.nextFloat();
-        System.out.println("Enter second number");
+        System.out.println("Enter second number:");
         // read second number
         float b = scanner.nextFloat();
         // calculate and output the result
