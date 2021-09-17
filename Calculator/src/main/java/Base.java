@@ -23,6 +23,9 @@ public class Base {
         }
     }
 
+    /**
+     * Search for the longest word in array
+     */
     private static void searchMaxWordInArray() {
         // initialize scanner for reading user's input
         Scanner scanner = new Scanner(System.in);
