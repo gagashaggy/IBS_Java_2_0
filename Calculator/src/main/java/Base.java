@@ -21,6 +21,7 @@ public class Base {
             default:
                 System.out.println("Unknown value");
         }
+        scanner.close();
     }
 
     /**
@@ -36,6 +37,7 @@ public class Base {
             System.out.println("Enter a word:");
             words[i] = scanner.next();
         }
+        scanner.close();
         System.out.println("Searching for the longest word...");
         int index = 0;
         int length = 0;
@@ -57,16 +59,15 @@ public class Base {
         System.out.println("Enter first number:");
         // read first number
         float a = scanner.nextFloat();
+        System.out.println("Enter an operation symbol (+,-,*,/):");
+        // read the operator
+        String operator = scanner.next();
         System.out.println("Enter second number:");
         // read second number
         float b = scanner.nextFloat();
-        while (true) {
-            System.out.println("Enter an operation symbol (+,-,*,/):");
-            // read the operator
-            String operator = scanner.next();
-            // calculate and output the result
-            System.out.printf(/*round to 4 decimal places*/"Result = %.4f\n", calculate(a, b, operator));
-        }
+        // calculate and output the result
+        System.out.printf(/*round to 4 decimal places*/"Result = %.4f\n", calculate(a, b, operator));
+        scanner.close();
     }
 
     /**
@@ -91,8 +92,6 @@ public class Base {
             case "/":
                 // return division of given numbers
                 return a / b;
-            case "exit":
-                System.exit(0);
             default:
                 throw new RuntimeException("Unknown operator");
         }
