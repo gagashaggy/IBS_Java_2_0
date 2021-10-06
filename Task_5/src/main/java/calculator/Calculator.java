@@ -14,15 +14,38 @@ public class Calculator {
     protected double b = Double.NaN;
     protected String operator;
     protected double result = Double.NaN;
+    protected String errorMessage;
     // used to cut extra zeros after point
     protected DecimalFormat decimalFormat = new DecimalFormat("#.################");
 
-    public void setA(String a) {
-        this.a = Double.parseDouble(a);
+    /**
+     * Sets first number
+     * @param a
+     * @return true if the number was set correctly, false if something went wrong
+     */
+    public boolean setA(String a) {
+        try {
+            this.a = Double.parseDouble(a.replace(",", "."));
+            return true;
+        } catch (NumberFormatException e) {
+            System.out.println("Not a number. Enter a number:");
+            return false;
+        }
     }
 
-    public void setB(String b) {
-        this.b = Double.parseDouble(b);
+    /**
+     * Sets second number
+     * @param b
+     * @return true if the number was set correctly, false if something went wrong
+     */
+    public boolean setB(String b) {
+        try {
+            this.b = Double.parseDouble(b.replace(",", "."));
+            return true;
+        } catch (NumberFormatException e) {
+            System.out.println("Not a number. Enter a number:");
+            return false;
+        }
     }
 
     public void setOperator(String operator) {
@@ -30,6 +53,8 @@ public class Calculator {
     }
 
     public String getResult() {
+        if (errorMessage != null)
+            return errorMessage;
         if (Double.isNaN(result))
             return null;
         return decimalFormat.format(result);
@@ -90,6 +115,7 @@ public class Calculator {
         b = Double.NaN;
         operator = null;
         result = Double.NaN;
+        errorMessage = null;
     }
 
     @Override

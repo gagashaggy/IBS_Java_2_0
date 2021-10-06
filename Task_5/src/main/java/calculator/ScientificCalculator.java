@@ -11,44 +11,42 @@ import java.util.Random;
 public class ScientificCalculator extends Calculator {
 
     @Override
-    public void setA(String a) {
+    public boolean setA(String a) {
         switch (a) {
             case "random":
                 this.a = new Random().nextDouble();
                 System.out.println(this.a);
-                break;
+                return true;
             case "e":
                 this.a = Math.E;
                 System.out.println(this.a);
-                break;
+                return true;
             case "pi":
                 this.a = Math.PI;
                 System.out.println(this.a);
-                break;
+                return true;
             default:
-                super.setA(a);
-                break;
+                return super.setA(a);
         }
     }
 
     @Override
-    public void setB(String b) {
+    public boolean setB(String b) {
         switch (b) {
             case "random":
                 this.b = new Random().nextDouble();
                 System.out.println(this.b);
-                break;
+                return true;
             case "e":
                 this.b = Math.E;
                 System.out.println(this.b);
-                break;
+                return true;
             case "pi":
                 this.b = Math.PI;
                 System.out.println(this.b);
-                break;
+                return true;
             default:
-                super.setB(b);
-                break;
+                 return super.setB(b);
         }
     }
 

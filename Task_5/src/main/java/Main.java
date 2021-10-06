@@ -58,17 +58,21 @@ public class Main {
                     } else System.out.println("This type of calculator does not support numeral systems. Please switch to Programmer calculator.");
                     break;
                 default:
-                    calculator.setA(command);
+                    if (!calculator.setA(command))
+                        continue;
                     System.out.println("Enter the operation symbol:");
                     calculator.setOperator(scanner.next().trim());
                     Boolean isBinary = calculator.isBinaryOperator();
                     if (isBinary != null) {
                         if (isBinary) {
                             System.out.println("Enter the second number:");
-                            calculator.setB(scanner.next());
+                            boolean isSet;
+                            do {
+                                isSet = calculator.setB(scanner.next());
+                            } while (!isSet);
                         }
                     } else {
-                        System.out.println("Such operator does not exist or not available in the current type of calculator.");
+                        System.out.println("Such operator does not exist or not available in the current type of calculator. Enter another operator:");
                         calculator.reset();
                         continue;
                     }

@@ -25,25 +25,33 @@ public class ProgrammerCalculator extends Calculator {
     }
 
     @Override
-    public void setA(String a) {
-        switch (numeralSystem) {
-            case "dec":
-                this.a = Integer.parseInt(a);
-                break;
-            case "bin":
-                this.a = Integer.parseInt(a, 2);
-                break;
-            case "oct":
-                this.a = Integer.parseInt(a, 8);
-                break;
-            case "hex":
-                this.a = Integer.parseInt(a, 16);
-                break;
+    public boolean setA(String a) {
+        try {
+            switch (numeralSystem) {
+                case "dec":
+                    this.a = Integer.parseInt(a);
+                    break;
+                case "bin":
+                    this.a = Integer.parseInt(a, 2);
+                    break;
+                case "oct":
+                    this.a = Integer.parseInt(a, 8);
+                    break;
+                case "hex":
+                    this.a = Integer.parseInt(a, 16);
+                    break;
+            }
+            return true;
+        } catch (NumberFormatException e) {
+            System.out.println("Such number is not allowed in the selected numeral system. Enter another number");
+            return false;
         }
     }
 
     @Override
     public String getResult() {
+        if (errorMessage != null)
+            return errorMessage;
         if (convertTo != null)
             return convertedResult;
         switch (numeralSystem) {
@@ -58,20 +66,26 @@ public class ProgrammerCalculator extends Calculator {
     }
 
     @Override
-    public void setB(String b) {
-        switch (numeralSystem) {
-            case "dec":
-                this.b = Integer.parseInt(b);
-                break;
-            case "bin":
-                this.b = Integer.parseInt(b, 2);
-                break;
-            case "oct":
-                this.b = Integer.parseInt(b, 8);
-                break;
-            case "hex":
-                this.b = Integer.parseInt(b, 16);
-                break;
+    public boolean setB(String b) {
+        try {
+            switch (numeralSystem) {
+                case "dec":
+                    this.b = Integer.parseInt(b);
+                    break;
+                case "bin":
+                    this.b = Integer.parseInt(b, 2);
+                    break;
+                case "oct":
+                    this.b = Integer.parseInt(b, 8);
+                    break;
+                case "hex":
+                    this.b = Integer.parseInt(b, 16);
+                    break;
+            }
+            return true;
+        } catch (NumberFormatException e) {
+            System.out.println("Such number is not allowed in the selected numeral system. Enter another number");
+            return false;
         }
     }
 
@@ -115,8 +129,12 @@ public class ProgrammerCalculator extends Calculator {
                 result = a * b;
                 break;
             case "/":
-                result = a / b;
-                break;
+                try {
+                    result = a / b;
+                    break;
+                } catch (ArithmeticException e) {
+                    errorMessage = "Cannot divide by zero";
+                }
             case "and":
             case "&":
                 result = a & b;
@@ -165,6 +183,7 @@ public class ProgrammerCalculator extends Calculator {
         operator = null;
         convertTo = null;
         convertedResult = null;
+        errorMessage = null;
     }
 
     @Override
