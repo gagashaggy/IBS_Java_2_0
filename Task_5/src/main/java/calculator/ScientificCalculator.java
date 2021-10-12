@@ -11,47 +11,41 @@ import java.util.Random;
 public class ScientificCalculator extends Calculator {
 
     @Override
-    public boolean setA(String a) {
+    public void setA(String a) {
         switch (a) {
             case "random":
                 this.a = new Random().nextDouble();
                 System.out.println(this.a);
-                return true;
             case "e":
                 this.a = Math.E;
                 System.out.println(this.a);
-                return true;
             case "pi":
                 this.a = Math.PI;
                 System.out.println(this.a);
-                return true;
             default:
-                return super.setA(a);
+                super.setA(a);
         }
     }
 
     @Override
-    public boolean setB(String b) {
+    public void setB(String b) {
         switch (b) {
             case "random":
                 this.b = new Random().nextDouble();
                 System.out.println(this.b);
-                return true;
             case "e":
                 this.b = Math.E;
                 System.out.println(this.b);
-                return true;
             case "pi":
                 this.b = Math.PI;
                 System.out.println(this.b);
-                return true;
             default:
-                 return super.setB(b);
+                 super.setB(b);
         }
     }
 
     @Override
-    public Boolean isBinaryOperator() {
+    public boolean isBinaryOperator() {
         switch (operator) {
             case "^":
             case "%":
@@ -88,6 +82,8 @@ public class ScientificCalculator extends Calculator {
                 break;
             case "mod":
             case "%":
+                if (b == 0)
+                    throw new ArithmeticException("Cannot divide by zero");
                 result = a % b;
                 break;
             case "^3":

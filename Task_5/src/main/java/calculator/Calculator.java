@@ -14,38 +14,23 @@ public class Calculator {
     protected double b = Double.NaN;
     protected String operator;
     protected double result = Double.NaN;
-    protected String errorMessage;
     // used to cut extra zeros after point
     protected DecimalFormat decimalFormat = new DecimalFormat("#.################");
 
     /**
      * Sets first number
      * @param a
-     * @return true if the number was set correctly, false if something went wrong
      */
-    public boolean setA(String a) {
-        try {
-            this.a = Double.parseDouble(a.replace(",", "."));
-            return true;
-        } catch (NumberFormatException e) {
-            System.out.println("Not a number. Enter a number:");
-            return false;
-        }
+    public void setA(String a) throws NumberFormatException {
+        this.a = Double.parseDouble(a.replace(",", "."));
     }
 
     /**
      * Sets second number
      * @param b
-     * @return true if the number was set correctly, false if something went wrong
      */
-    public boolean setB(String b) {
-        try {
-            this.b = Double.parseDouble(b.replace(",", "."));
-            return true;
-        } catch (NumberFormatException e) {
-            System.out.println("Not a number. Enter a number:");
-            return false;
-        }
+    public void setB(String b) throws NumberFormatException {
+        this.b = Double.parseDouble(b.replace(",", "."));
     }
 
     public void setOperator(String operator) {
@@ -53,8 +38,6 @@ public class Calculator {
     }
 
     public String getResult() {
-        if (errorMessage != null)
-            return errorMessage;
         if (Double.isNaN(result))
             return null;
         return decimalFormat.format(result);
@@ -63,9 +46,10 @@ public class Calculator {
     /**
      * Determines if the given operator is binary
      *
-     * @return true if the operator is binary, false if the operator is unary, null if the operator is unknown
+     * @return true if the operator is binary, false if the operator is unary
+     * @throws IllegalArgumentException if the operator is unknown
      */
-    public Boolean isBinaryOperator() {
+    public boolean isBinaryOperator() throws IllegalArgumentException {
         switch (operator) {
             case "+":
             case "-":
@@ -78,10 +62,10 @@ public class Calculator {
             case "+/-":
                 return false;
         }
-        return null;
+        throw new IllegalArgumentException("Such operator does not exist or not available in the current type of calculator. Enter another operator:");
     }
 
-    public void calculate() {
+    public void calculate() throws ArithmeticException {
         switch (operator) {
             case "+":
                 result = a + b;
@@ -93,15 +77,21 @@ public class Calculator {
                 result = a * b;
                 break;
             case "/":
+                if (b == 0)
+                    throw new ArithmeticException("Cannot divide by zero");
                 result = a / b;
                 break;
             case "1/":
+                if (a == 0)
+                    throw new ArithmeticException("Cannot divide by zero");
                 result = 1 / a;
                 break;
             case "^2":
                 result = Math.pow(a, 2);
                 break;
             case "sqrt":
+                if (a < 0)
+                    throw new ArithmeticException("Cannot get square root from a negative number");
                 result = Math.sqrt(a);
                 break;
             case "+/-":
@@ -115,7 +105,6 @@ public class Calculator {
         b = Double.NaN;
         operator = null;
         result = Double.NaN;
-        errorMessage = null;
     }
 
     @Override

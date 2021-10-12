@@ -25,33 +25,25 @@ public class ProgrammerCalculator extends Calculator {
     }
 
     @Override
-    public boolean setA(String a) {
-        try {
-            switch (numeralSystem) {
-                case "dec":
-                    this.a = Integer.parseInt(a);
-                    break;
-                case "bin":
-                    this.a = Integer.parseInt(a, 2);
-                    break;
-                case "oct":
-                    this.a = Integer.parseInt(a, 8);
-                    break;
-                case "hex":
-                    this.a = Integer.parseInt(a, 16);
-                    break;
-            }
-            return true;
-        } catch (NumberFormatException e) {
-            System.out.println("Such number is not allowed in the selected numeral system. Enter another number");
-            return false;
+    public void setA(String a) throws NumberFormatException {
+        switch (numeralSystem) {
+            case "dec":
+                this.a = Integer.parseInt(a);
+                break;
+            case "bin":
+                this.a = Integer.parseInt(a, 2);
+                break;
+            case "oct":
+                this.a = Integer.parseInt(a, 8);
+                break;
+            case "hex":
+                this.a = Integer.parseInt(a, 16);
+                break;
         }
     }
 
     @Override
     public String getResult() {
-        if (errorMessage != null)
-            return errorMessage;
         if (convertTo != null)
             return convertedResult;
         switch (numeralSystem) {
@@ -66,31 +58,25 @@ public class ProgrammerCalculator extends Calculator {
     }
 
     @Override
-    public boolean setB(String b) {
-        try {
-            switch (numeralSystem) {
-                case "dec":
-                    this.b = Integer.parseInt(b);
-                    break;
-                case "bin":
-                    this.b = Integer.parseInt(b, 2);
-                    break;
-                case "oct":
-                    this.b = Integer.parseInt(b, 8);
-                    break;
-                case "hex":
-                    this.b = Integer.parseInt(b, 16);
-                    break;
-            }
-            return true;
-        } catch (NumberFormatException e) {
-            System.out.println("Such number is not allowed in the selected numeral system. Enter another number");
-            return false;
+    public void setB(String b) throws NumberFormatException {
+        switch (numeralSystem) {
+            case "dec":
+                this.b = Integer.parseInt(b);
+                break;
+            case "bin":
+                this.b = Integer.parseInt(b, 2);
+                break;
+            case "oct":
+                this.b = Integer.parseInt(b, 8);
+                break;
+            case "hex":
+                this.b = Integer.parseInt(b, 16);
+                break;
         }
     }
 
     @Override
-    public Boolean isBinaryOperator() {
+    public boolean isBinaryOperator() {
         switch (operator) {
             case "+":
             case "-":
@@ -113,7 +99,7 @@ public class ProgrammerCalculator extends Calculator {
             case "~":
                 return false;
         }
-        return null;
+        throw new IllegalArgumentException("Such operator does not exist or not available in the current type of calculator. Enter another operator:");
     }
 
     @Override
@@ -129,12 +115,10 @@ public class ProgrammerCalculator extends Calculator {
                 result = a * b;
                 break;
             case "/":
-                try {
-                    result = a / b;
-                    break;
-                } catch (ArithmeticException e) {
-                    errorMessage = "Cannot divide by zero";
-                }
+                if (b == 0)
+                    throw new ArithmeticException("Cannot divide by zero");
+                result = a / b;
+                break;
             case "and":
             case "&":
                 result = a & b;
@@ -183,7 +167,6 @@ public class ProgrammerCalculator extends Calculator {
         operator = null;
         convertTo = null;
         convertedResult = null;
-        errorMessage = null;
     }
 
     @Override

@@ -55,38 +55,58 @@ public class Main {
                             ((ProgrammerCalculator) calculator).setNumeralSystem(command);
                             System.out.println("You have selected new numeral system: " + ((ProgrammerCalculator) calculator).getNumeralSystem());
                         } else System.out.println("This numeral system is already selected");
-                    } else System.out.println("This type of calculator does not support numeral systems. Please switch to Programmer calculator.");
+                    } else
+                        System.out.println("This type of calculator does not support numeral systems. Please switch to Programmer calculator.");
                     break;
                 default:
-                    if (!calculator.setA(command))
+                    try {
+                        calculator.setA(command);
+                    } catch (NumberFormatException e) {
+                        System.out.println("Unknown command or number. Try again.");
+                        System.out.println("Enter the first number or some command:");
                         continue;
+                    }
                     System.out.println("Enter the operation symbol:");
-                    calculator.setOperator(scanner.next().trim());
-                    Boolean isBinary = calculator.isBinaryOperator();
-                    if (isBinary != null) {
-                        if (isBinary) {
-                            System.out.println("Enter the second number:");
-                            boolean isSet;
-                            do {
-                                isSet = calculator.setB(scanner.next());
-                            } while (!isSet);
+                    boolean isSet;
+                    boolean isBinary = false;
+                    do {
+                        try {
+                            calculator.setOperator(scanner.next().trim());
+                            isBinary = calculator.isBinaryOperator();
+                            isSet = true;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println(e.getMessage());
+                            isSet = false;
                         }
-                    } else {
-                        System.out.println("Such operator does not exist or not available in the current type of calculator. Enter another operator:");
-                        calculator.reset();
-                        continue;
+                    } while (!isSet);
+                    if (isBinary) {
+                        System.out.println("Enter the second number:");
+                        do {
+                            try {
+                                calculator.setB(scanner.next());
+                                isSet = true;
+                            } catch (NumberFormatException e) {
+                                System.out.println("Not a number. Enter a number:");
+                                isSet = false;
+                            }
+                        } while (!isSet);
                     }
-                    calculator.calculate();
-                    if (calculator.getResult() == null) {
-                        System.out.println("The requested operation could not be executed on given operands.");
-                        calculator.reset();
-                    } else {
-                        System.out.println("result = " + calculator.getResult());
+                    try {
+                        calculator.calculate();
+                        if (calculator.getResult() == null) {
+                            System.out.println("The requested operation could not be executed on given operands.");
+                        } else {
+                            System.out.println("result = " + calculator.getResult());
+                        }
+                    } catch (ArithmeticException e) {
+                        System.out.println(e.getMessage());
                     }
-                    System.out.println();
-                    System.out.println("Enter the first number or some command:");
-                    System.out.println(calculator.toString());
-                    calculator.reset();
+                    finally {
+                        System.out.println();
+                        System.out.println("Enter the first number or some command:");
+                        System.out.println(calculator.toString());
+                        calculator.reset();
+                    }
             }
         }
         scanner.close();
