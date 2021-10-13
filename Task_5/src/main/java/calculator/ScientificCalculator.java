@@ -89,6 +89,9 @@ public class ScientificCalculator extends Calculator {
             case "^3":
                 result = Math.pow(a, 3);
                 break;
+            case "cbrt":
+                result = Math.cbrt(a);
+                break;
             case "2^":
                 result = Math.pow(2, a);
                 break;

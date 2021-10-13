@@ -1,6 +1,7 @@
 package calculator;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 
 /**
  * This calculator tries to imitate behaviour of standard MS Windows calculator.
@@ -16,6 +17,12 @@ public class Calculator {
     protected double result = Double.NaN;
     // used to cut extra zeros after point
     protected DecimalFormat decimalFormat = new DecimalFormat("#.################");
+    protected DecimalFormatSymbols dfs = new DecimalFormatSymbols();
+
+    public Calculator() {
+        dfs.setDecimalSeparator('.');
+        decimalFormat.setDecimalFormatSymbols(dfs);
+    }
 
     /**
      * Sets first number
