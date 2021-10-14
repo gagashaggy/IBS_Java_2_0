@@ -16,12 +16,15 @@ public class ScientificCalculator extends Calculator {
             case "random":
                 this.a = new Random().nextDouble();
                 System.out.println(this.a);
+                break;
             case "e":
                 this.a = Math.E;
                 System.out.println(this.a);
+                break;
             case "pi":
                 this.a = Math.PI;
                 System.out.println(this.a);
+                break;
             default:
                 super.setA(a);
         }
@@ -124,6 +127,9 @@ public class ScientificCalculator extends Calculator {
                 break;
             case "tan":
                 result = Math.tan(a);
+                if (result > 57.29 || result < -57.29) {
+                    throw new ArithmeticException("This value is not allowed for tangent");
+                }
                 break;
             case "asin":
                 result = Math.asin(a);
@@ -146,7 +152,13 @@ public class ScientificCalculator extends Calculator {
         }
     }
 
-    private void factorial() {
+    private void factorial() throws ArithmeticException {
+        if (a == 0) {
+            result = 1;
+            return;
+        } else if (a < 0) {
+            throw new ArithmeticException("Cannot calculate factorial of negative number");
+        }
         int result = (int) this.a;
         int i = result;
         while (i > 1) {
